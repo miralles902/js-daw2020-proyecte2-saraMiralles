@@ -1,0 +1,13 @@
+.horizontal {
+    float: left;
+    list-style: none;
+    margin: 10px;
+}
+body {
+    background-image: url(../img/background.png);
+    background-size: cover;
+}
+
+.hide {
+    display:none;
+}
