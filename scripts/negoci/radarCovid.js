@@ -4,7 +4,7 @@
 //pasar de negoci a dinamic en array
 $(function () {
   //habilitar las notificaciones
-  $('button').click('#button1', function (e) {
+  $('#button1').click(function (e) {
     e.preventDefault();
 
     let permiso = Notification.permission;
@@ -40,7 +40,7 @@ $(function () {
   });
 
   //info coronavirus en 20 km
-  $('button').click('#button2', function (e) {
+  $('#button2').click(function (e) {
     e.preventDefault();
 
     //conseguir la posición del usuario
@@ -70,9 +70,8 @@ $(function () {
     }
 
     /*peticion().then((json) => {
-      let guar = json;
-      let ciud = city;
-      let string = JSON.stringify(ciud);
+      let guar = json.country;
+      let string = JSON.stringify(guar);
       console.log(string);
     }); */
     peticion();
