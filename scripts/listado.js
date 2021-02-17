@@ -16,22 +16,22 @@ $(() => {
  */
 $(document).on("juegosCargados", function () {
   /* seleccion de las zonas del html que deseamos */
-  let $generoX = $("li").eq(0); //Genero X sobre la tabla
-  let $anyoX = $("li").eq(1); //Año X sobre la tabla
+  let $generoX = $("li").eq(0); //"Genero X" sobre la tabla
+  let $anyoX = $("li").eq(1); //"Año X" sobre la tabla
   var $cerrarGenero = $("*").filter(function () {
-    //boton X de genero
+    //boton "X" de genero
     var datos = $(this).data("filtro");
     return datos == "1";
   });
   var $cerrarAnyo = $("*").filter(function () {
-    //boton X de año
+    //boton "X" de año
     var datos = $(this).data("filtro");
     return datos == "2";
   });
   let $desplegable = $("select.form-select"); //select desplegable
   let $genero = $("filter.form-check"); //listado de generos
   let $anyo = $(".input-group"); //input para año
-
+  
   /*Inicialmente, si el usuario no ha seleccionado ningún filtro,
     no saldrá nada debajo del desplegable.*/
   $genero.toggleClass("hide");
@@ -47,25 +47,28 @@ $(document).on("juegosCargados", function () {
     //opcion seleccionada
     var $selectedOption = $(this).children("option:selected").val();
 
+    //mostrar siempre primera opcion (filtrar por..)
+    var $primera = $(".form-select option:first").prop("selected", "selected");
+
     /* Filtrar por Genero */
     if ($selectedOption == 1) {
-      $(".form-select option:first").prop("selected", "selected");
-      $genero.toggleClass("hide");
-      $generoX.toggleClass("hide");
-      $desplegable.find("option").eq(1).toggleClass("hide");
+      $primera; //mostrar siempre primera opcion (filtrar por..)
+      $genero.toggleClass("hide"); //volver a mostrar la opcion de filtrado
+      $generoX.toggleClass("hide"); //mostrar la opcion "genero X" sobre la tabla
+      $desplegable.find("option").eq(1).toggleClass("hide"); // escondemos la opcion de genero del desplegable
 
       /* ver generos de juegos en check option */
-      
+
       $genero.empty(); //vaciamos el listado anterior
-      
       const generosNoDuplicados = []; //array vacio
       
+      //p: parametro   |  pd: parametro duplicado
       listadoJuegos.forEach((p) => {
         //géneros obtenidos del JSON
         if (
           generosNoDuplicados.findIndex((pd) => pd.genero === p.genero) === -1
         ) {
-          //si no existe lo copiamos
+          //si no existe el mismo nombre lo copiamos
           generosNoDuplicados.push(p);
         }
       });
@@ -75,7 +78,6 @@ $(document).on("juegosCargados", function () {
       generosNoDuplicados.forEach(function (item) {
         const tipoJuego = item.genero; //seleccionamos el genero
         //añadimos los checkbox por tantas categorias tengamos
-        //item.genero busca en el json todos los resultados de genero
         html +=
           '<div class="form-check"><input class="form-check-input" type="checkbox" value="' +
           tipoJuego +
@@ -91,10 +93,10 @@ $(document).on("juegosCargados", function () {
 
     /* Filtrar por Año */
     if ($selectedOption == 2) {
-      $(".form-select option:first").prop("selected", "selected");
-      $anyo.toggleClass("hide");
-      $anyoX.toggleClass("hide");
-      $desplegable.find("option").eq(2).toggleClass("hide");
+      $primera; //mostrar siempre primera opcion (filtrar por..)
+      $anyo.toggleClass("hide"); //volver a mostrar la opcion de filtrado
+      $anyoX.toggleClass("hide"); //mostrar la opcion "año X" sobre la tabla
+      $desplegable.find("option").eq(2).toggleClass("hide"); // escondemos la opcion de año del desplegable
 
       //validamos solo la opcion 4 digitos
       $("input.form-control").keypress(function (e) {
