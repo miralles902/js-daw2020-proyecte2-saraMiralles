@@ -65,17 +65,18 @@ $(function () {
         }
       );
       const json = await resp.json();
-      console.log(json);
-      //return json;
+      json.forEach(function(item) {
+        Object.keys(item).forEach(function(key) {
+        key = "city";
+        const array = item[key];
+        console.log(array);
+        localStorage.setItem('ciudades', array);
+        })
+      })
+      localStorage.getItem('ciudades');
     }
 
-    /*peticion().then((json) => {
-      let guar = json.country;
-      let string = JSON.stringify(guar);
-      console.log(string);
-    }); */
     peticion();
-    // console.log(peticion());
 
     //comparamos los datos obtenidos con los datos COVID
     async function peticion2() {
@@ -93,7 +94,7 @@ $(function () {
     peticion2();
 
     let $carga = $('<p>Cargando Datos...</p>'); //añadimos el texto auna variable
-    let $cargado = $('<p>latitud ' + latitud + 'longitud ' + longitud + '</p>'); //añadimos el texto auna variable
+    let $cargado = $('<p>latitud ' + peticion() + '</p>'); //añadimos el texto a una variable
     //mensaje de cargando mediante un setTimeOut en una promesa
     function tiempoCarga(ms) {
       return new Promise((resolve) => {
