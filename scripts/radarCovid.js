@@ -53,7 +53,7 @@ $(function () {
     var longitud = localStorage.getItem('longitud'); // recogemos en una variable la longitud
 
     //conseguir los municipios alrededor del usuario
-    async function peticion() {
+    async function obtenerPoblesA20Km() {
       const resp = await fetch(
         'https://api.geodatasource.com/cities?key=NNG2ELIP3MKCKNOBB2YDPOMXFXU68FJF&lat=' +
           latitud +
@@ -65,21 +65,18 @@ $(function () {
         }
       );
       const json = await resp.json();
-      json.forEach(function(item) {
-        Object.keys(item).forEach(function(key) {
-        key = "city";
-        const array = item[key];
-        console.log(array);
-        localStorage.setItem('ciudades', array);
-        })
-      })
-      localStorage.getItem('ciudades');
+      json.forEach(function (item) {
+        Object.keys(item).forEach(function (key) {
+          key = 'city';
+          const array = item[key];
+          return array;
+        });
+      });
     }
-
-    peticion();
+    obtenerPoblesA20Km();
 
     //comparamos los datos obtenidos con los datos COVID
-    async function peticion2() {
+    async function obtenerDatosCovid() {
       const resp = await fetch(
         'https://dadesobertes.gva.es/api/3/action/package_search?q=id:38e6d3ac-fd77-413e-be72-aed7fa6f13c2',
         {
@@ -88,13 +85,24 @@ $(function () {
         }
       );
       const jsons = await resp.json();
-      console.log(jsons);
-      //return json;
+      let resources = jsons.result.results[0].resources;
+      let numero = resources.length - 1;
+      let name = resources[numero].name;
+      let url = resources[numero].url;
+      console.log(name);
+      console.log(url);
+      //otro fetch con la url de la genralitat
+      const respo = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //revisar esta parte ya que pone json y es csv
+      });
+      const csv = await respo;
+      console.log(csv);
     }
-    peticion2();
+    obtenerDatosCovid();
 
     let $carga = $('<p>Cargando Datos...</p>'); //añadimos el texto auna variable
-    let $cargado = $('<p>latitud ' + peticion() + '</p>'); //añadimos el texto a una variable
+    let $cargado = $('<p>latitud ' + obtenerPoblesA20Km() + '</p>'); //añadimos el texto a una variable
     //mensaje de cargando mediante un setTimeOut en una promesa
     function tiempoCarga(ms) {
       return new Promise((resolve) => {

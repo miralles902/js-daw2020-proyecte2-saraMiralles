@@ -5,63 +5,63 @@ var listadoJuegos;
  * Función que se ejecuta cuando el DOM se ha cargado completamente
  */
 $(() => {
-  $.getJSON("resources/juegos.json", function (data) {
+  $.getJSON('resources/juegos.json', function (data) {
     listadoJuegos = data;
-    $(document).trigger("juegosCargados");
+    $(document).trigger('juegosCargados');
   });
 });
 
 /**
  * Evento que se lanza al acabar de cargar los juegos del fichero JSON
  */
-$(document).on("juegosCargados", function () {
+$(document).on('juegosCargados', function () {
   /* seleccion de las zonas del html que deseamos */
-  let $generoX = $("li").eq(0); //"Genero X" sobre la tabla
-  let $anyoX = $("li").eq(1); //"Año X" sobre la tabla
-  var $cerrarGenero = $("*").filter(function () {
+  let $generoX = $('li').eq(0); //"Genero X" sobre la tabla
+  let $anyoX = $('li').eq(1); //"Año X" sobre la tabla
+  var $cerrarGenero = $('*').filter(function () {
     //boton "X" de genero
-    var datos = $(this).data("filtro");
-    return datos == "1";
+    var datos = $(this).data('filtro');
+    return datos == '1';
   });
-  var $cerrarAnyo = $("*").filter(function () {
+  var $cerrarAnyo = $('*').filter(function () {
     //boton "X" de año
-    var datos = $(this).data("filtro");
-    return datos == "2";
+    var datos = $(this).data('filtro');
+    return datos == '2';
   });
-  let $desplegable = $("select.form-select"); //select desplegable
-  let $genero = $("filter.form-check"); //listado de generos
-  let $anyo = $(".input-group"); //input para año
-  
+  let $desplegable = $('select.form-select'); //select desplegable
+  let $genero = $('filter.form-check'); //listado de generos
+  let $anyo = $('.input-group'); //input para año
+
   /*Inicialmente, si el usuario no ha seleccionado ningún filtro,
     no saldrá nada debajo del desplegable.*/
-  $genero.toggleClass("hide");
-  $anyo.toggleClass("hide");
+  $genero.toggleClass('hide');
+  $anyo.toggleClass('hide');
   /* También escondemos las opciones que se muestran al filtrar encima de la tabla*/
-  $generoX.toggleClass("hide");
-  $anyoX.toggleClass("hide");
+  $generoX.toggleClass('hide');
+  $anyoX.toggleClass('hide');
 
   //mostrar clickar sobre desplegable
   var $guardarDesplegable = $desplegable.change(function (event) {
     event.preventDefault();
 
     //opcion seleccionada
-    var $selectedOption = $(this).children("option:selected").val();
+    var $selectedOption = $(this).children('option:selected').val();
 
     //mostrar siempre primera opcion (filtrar por..)
-    var $primera = $(".form-select option:first").prop("selected", "selected");
+    var $primera = $('.form-select option:first').prop('selected', 'selected');
 
     /* Filtrar por Genero */
     if ($selectedOption == 1) {
       $primera; //mostrar siempre primera opcion (filtrar por..)
-      $genero.toggleClass("hide"); //volver a mostrar la opcion de filtrado
-      $generoX.toggleClass("hide"); //mostrar la opcion "genero X" sobre la tabla
-      $desplegable.find("option").eq(1).toggleClass("hide"); // escondemos la opcion de genero del desplegable
+      $genero.toggleClass('hide'); //volver a mostrar la opcion de filtrado
+      $generoX.toggleClass('hide'); //mostrar la opcion "genero X" sobre la tabla
+      $desplegable.find('option').eq(1).toggleClass('hide'); // escondemos la opcion de genero del desplegable
 
       /* ver generos de juegos en check option */
 
       $genero.empty(); //vaciamos el listado anterior
       const generosNoDuplicados = []; //array vacio
-      
+
       //p: parametro   |  pd: parametro duplicado
       listadoJuegos.forEach((p) => {
         //géneros obtenidos del JSON
@@ -73,7 +73,7 @@ $(document).on("juegosCargados", function () {
         }
       });
 
-      let html = " ";
+      let html = ' ';
       //Recorremos el listado de juegos obtenido sin repeticiones
       generosNoDuplicados.forEach(function (item) {
         const tipoJuego = item.genero; //seleccionamos el genero
@@ -85,7 +85,7 @@ $(document).on("juegosCargados", function () {
           tipoJuego +
           '">' +
           tipoJuego +
-          "</label></div>";
+          '</label></div>';
       });
       // Actualizar listado de generos de juegos
       $genero.append(html);
@@ -94,22 +94,23 @@ $(document).on("juegosCargados", function () {
     /* Filtrar por Año */
     if ($selectedOption == 2) {
       $primera; //mostrar siempre primera opcion (filtrar por..)
-      $anyo.toggleClass("hide"); //volver a mostrar la opcion de filtrado
-      $anyoX.toggleClass("hide"); //mostrar la opcion "año X" sobre la tabla
-      $desplegable.find("option").eq(2).toggleClass("hide"); // escondemos la opcion de año del desplegable
-      
+      $anyo.toggleClass('hide'); //volver a mostrar la opcion de filtrado
+      $anyoX.toggleClass('hide'); //mostrar la opcion "año X" sobre la tabla
+      $desplegable.find('option').eq(2).toggleClass('hide'); // escondemos la opcion de año del desplegable
+
       //validamos solo la opcion 4 digitos
-      $("input.form-control").keypress(function (e) {
-        let $contenido = $(".form-control").val(); //recogemos el contenido del input
+      $('input.form-control').keypress(function (e) {
+        let $contenido = $('.form-control').val(); //recogemos el contenido del input
         if (e.which == 13) {
           //comprobación de que solo sean 4 numerps
           const regexp = /^\d{4}$/.test($contenido);
-          if (regexp) { //si la comprobación es correcta
-            $anyo.css("border", "none"); //sin borde
+          if (regexp) {
+            //si la comprobación es correcta
+            $anyo.css('border', 'none'); //sin borde
             $anyo.submit(); //enviar
           } else {
             //si no es correcto sale un borde rojo
-            return $anyo.css("border", "red solid 1px");
+            return $anyo.css('border', 'red solid 1px');
           }
         }
       });
@@ -119,21 +120,21 @@ $(document).on("juegosCargados", function () {
   $cerrarGenero.click(function (event) {
     event.preventDefault();
     //activamos de nuevo las opciones usando toggleClass nuevamente
-    $genero.toggleClass("hide"); //escondemos la opcion de filtrado
-    $generoX.toggleClass("hide"); // escondemos "Genero X" sobre la tabla
-    $desplegable.find("option").eq(1).toggleClass("hide"); //volvemos a mostrar genero en el desplegable
+    $genero.toggleClass('hide'); //escondemos la opcion de filtrado
+    $generoX.toggleClass('hide'); // escondemos "Genero X" sobre la tabla
+    $desplegable.find('option').eq(1).toggleClass('hide'); //volvemos a mostrar genero en el desplegable
   });
 
   //escondemos la seccion filtrar por año
   $cerrarAnyo.click(function (event) {
     event.preventDefault();
     //activamos de nuevo las opciones usando toggleClass nuevamente
-    $anyo.toggleClass("hide"); //escondemos la opcion de filtrado
-    $anyoX.toggleClass("hide"); // escondemos "Año X" sobre la tabla
-    $desplegable.find("option").eq(2).toggleClass("hide"); //volvemos a mostrar año en el desplegable
+    $anyo.toggleClass('hide'); //escondemos la opcion de filtrado
+    $anyoX.toggleClass('hide'); // escondemos "Año X" sobre la tabla
+    $desplegable.find('option').eq(2).toggleClass('hide'); //volvemos a mostrar año en el desplegable
   });
 
-  //guardamos en localStorage las opciones elegidas
-  localStorage.setItem("opciones", $guardarDesplegable);
-  let guardarOpcion = localStorage.getItem("opciones");
+  //guardamos en localStorage las opciones elegidas(To-DO)
+  localStorage.setItem('opciones', $guardarDesplegable);
+  let guardarOpcion = localStorage.getItem('opciones');
 });
