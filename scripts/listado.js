@@ -97,16 +97,16 @@ $(document).on("juegosCargados", function () {
       $anyo.toggleClass("hide"); //volver a mostrar la opcion de filtrado
       $anyoX.toggleClass("hide"); //mostrar la opcion "año X" sobre la tabla
       $desplegable.find("option").eq(2).toggleClass("hide"); // escondemos la opcion de año del desplegable
-
+      
       //validamos solo la opcion 4 digitos
       $("input.form-control").keypress(function (e) {
-        let $contenido = $(".form-control").val();
+        let $contenido = $(".form-control").val(); //recogemos el contenido del input
         if (e.which == 13) {
           //comprobación de que solo sean 4 numerps
           const regexp = /^\d{4}$/.test($contenido);
-          if (regexp) {
-            $anyo.css("border", "none");
-            $anyo.submit();
+          if (regexp) { //si la comprobación es correcta
+            $anyo.css("border", "none"); //sin borde
+            $anyo.submit(); //enviar
           } else {
             //si no es correcto sale un borde rojo
             return $anyo.css("border", "red solid 1px");
@@ -119,18 +119,18 @@ $(document).on("juegosCargados", function () {
   $cerrarGenero.click(function (event) {
     event.preventDefault();
     //activamos de nuevo las opciones usando toggleClass nuevamente
-    $genero.toggleClass("hide");
-    $generoX.toggleClass("hide");
-    $desplegable.find("option").eq(1).toggleClass("hide");
+    $genero.toggleClass("hide"); //escondemos la opcion de filtrado
+    $generoX.toggleClass("hide"); // escondemos "Genero X" sobre la tabla
+    $desplegable.find("option").eq(1).toggleClass("hide"); //volvemos a mostrar genero en el desplegable
   });
 
   //escondemos la seccion filtrar por año
   $cerrarAnyo.click(function (event) {
     event.preventDefault();
     //activamos de nuevo las opciones usando toggleClass nuevamente
-    $anyo.toggleClass("hide");
-    $anyoX.toggleClass("hide");
-    $desplegable.find("option").eq(2).toggleClass("hide");
+    $anyo.toggleClass("hide"); //escondemos la opcion de filtrado
+    $anyoX.toggleClass("hide"); // escondemos "Año X" sobre la tabla
+    $desplegable.find("option").eq(2).toggleClass("hide"); //volvemos a mostrar año en el desplegable
   });
 
   //guardamos en localStorage las opciones elegidas
