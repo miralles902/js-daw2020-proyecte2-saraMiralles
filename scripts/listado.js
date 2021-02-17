@@ -54,11 +54,26 @@ $(document).on("juegosCargados", function () {
       $generoX.toggleClass("hide");
       $desplegable.find("option").eq(1).toggleClass("hide");
 
-      //géneros obtenidos del JSON
+      /* ver generos de juegos en check option */
+      
+      $genero.empty(); //vaciamos el listado anterior
+      
+      const generosNoDuplicados = []; //array vacio
+      
+      listadoJuegos.forEach((p) => {
+        //géneros obtenidos del JSON
+        if (
+          generosNoDuplicados.findIndex((pd) => pd.genero === p.genero) === -1
+        ) {
+          //si no existe lo copiamos
+          generosNoDuplicados.push(p);
+        }
+      });
+
       let html = " ";
-      //Recorremos el listado de juegos
-      listadoJuegos.forEach(function (item) {
-        const tipoJuego = item.genero;
+      //Recorremos el listado de juegos obtenido sin repeticiones
+      generosNoDuplicados.forEach(function (item) {
+        const tipoJuego = item.genero; //seleccionamos el genero
         //añadimos los checkbox por tantas categorias tengamos
         //item.genero busca en el json todos los resultados de genero
         html +=
@@ -70,9 +85,10 @@ $(document).on("juegosCargados", function () {
           tipoJuego +
           "</label></div>";
       });
-      // Actualizar juegos
+      // Actualizar listado de generos de juegos
       $genero.append(html);
     }
+
     /* Filtrar por Año */
     if ($selectedOption == 2) {
       $(".form-select option:first").prop("selected", "selected");
