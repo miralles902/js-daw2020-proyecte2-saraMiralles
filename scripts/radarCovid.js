@@ -74,6 +74,7 @@ $(function () {
       });
     }
     obtenerPoblesA20Km();
+    console.log(obtenerPoblesA20Km());
 
     //comparamos los datos obtenidos con los datos COVID
     async function obtenerDatosCovid() {
@@ -90,13 +91,13 @@ $(function () {
       let name = resources[numero].name;
       let url = resources[numero].url;
       console.log(name);
-      console.log(url);
       //otro fetch con la url de la genralitat
       const respo = await fetch(url, {
         method: 'GET',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //revisar esta parte ya que pone json y es csv
+        headers: { 'Content-type': 'text/csv; charset=UTF-8' }, //el tipo de contenido será text/csv ya que recibimos un archivo csv
       });
-      const csv = await respo;
+      const csv = await respo.text(); //realizamos un .text() para imprimir el texto
+      //return csv;
       console.log(csv);
     }
     obtenerDatosCovid();
