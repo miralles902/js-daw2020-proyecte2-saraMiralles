@@ -46,7 +46,7 @@
           + año : la seleccion de año también hace una función en la que al pulsar la tecla enter si no se han introducido 4 numeros, el borde del input se vuelve rojo hasta que no volvemos a pulsar enter con 4 numeros introducidos de forma correcta.
         + también se ha programado la opción de Año X y genero X de forma que usan .toggleClass('hide'); sobre los elementos a mostrar y eleminar.
 + ### radarCovid.js
-  + *Contiene una función de carga y en su interior tenemos dos funciones, una para cuando pulsamos el boton 1 y otra para cuando pulsamos el boton 2
+  + *Contiene una función de carga y en su interior tenemos dos funciones, una para cuando pulsamos el boton 1 y otra para cuando pulsamos el boton 2*
     + *boton 1* : pide permiso al usuario para poder mostrar una notificación de navegador a un enlace, si se ha permitido muestra un mensaje y al pulsar este mensaje nos redirige a la página listado.html.
     + *boton 2* : al pulsar este boton pide permiso para localizar al usuario, si el usuario accede guarda su latitud y su longitud, la cual he guardado en un sessionStorage, también llama a las funciones abajo descritas y se ejecuta la promesa de cargando datos al iniciar el proceso, 5 segundos después se muestra la función datosTabla().
       + función obtenerPoblesA20Km() : hace un fetch al API REST de https://www.geodatasource.com/ introduciendo en la url la latitud y longitud recibidas por sessionStorage, podemos ver su funcionamiento si colocamos console.log(poble) donde se indica en un comentario, ya que no he llegadoa  realizar la función de mezclado de datos. Pero los pueblos se consiguen adecuadamente.
